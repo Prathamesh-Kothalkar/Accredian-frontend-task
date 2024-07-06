@@ -25,6 +25,7 @@ export default function Navbar() {
                         height={"80px"}
                         width={"80px"}
                         className='object-contain'
+                        onClick={()=>{navigate("/")}}
                     />
                 </div>
                 <div className="hidden md:flex items-center">
