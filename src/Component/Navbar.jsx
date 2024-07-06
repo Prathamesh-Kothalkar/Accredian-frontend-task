@@ -24,7 +24,7 @@ export default function Navbar() {
                         alt="Logo"
                         height={"80px"}
                         width={"80px"}
-                        className='object-contain'
+                        className='object-contain cursor-pointer'
                         onClick={()=>{navigate("/")}}
                     />
                 </div>

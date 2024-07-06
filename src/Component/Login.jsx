@@ -66,7 +66,7 @@ export default function Login(){
                
             </form>
             <div className="mt-3 text-sm text-gray-500">
-                Don't have an account ? <a href='/signup'>Create here</a>
+                Don't have an account ? <span className='cursor-pointer text-blue-600' onClick={()=>{navigate("/signup")}}>Create here</span>
             </div>
            </div>
            {console.log(import.meta.env.VITE_BACKEND_SERVER)}

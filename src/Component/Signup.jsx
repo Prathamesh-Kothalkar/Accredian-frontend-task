@@ -78,7 +78,7 @@ export default function Signup() {
                     
                 </form>
                 <div className="mt-2 text-sm text-gray-600">
-                    Already have an account ? <a href='/login'>Login here</a>
+                    Already have an account ? <span className='cursor-pointer text-blue-600' onClick={()=>{navigate("/login")}}>Login here</span>
                 </div>
             </div>
         </div>
