@@ -1,4 +1,4 @@
-import { Button } from '@mui/material';
+import { Button, CircularProgress } from '@mui/material';
 import TextField from '@mui/material/TextField';
 import { useContext, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -12,9 +12,11 @@ export default function Signup() {
     const navigate=useNavigate();
     const server = import.meta.env.VITE_BACKEND_SERVER;
     const {setIsLogin}=useContext(UserContext);
+    const [loading,setLoading]=useState(false);
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (isValid(name, email, password)) {
+            setLoading(true);
             try{
                 const response = await axios.post(`${server}/api/v1/user/create`,{
                     name,
@@ -27,11 +29,13 @@ export default function Signup() {
                 localStorage.setItem("token",token);
                 alert("User Created");
                 setIsLogin(true);
+                setLoading(false);
                 navigate("/");
                 
             }
             catch(err){
                 console.error(err);
+                setLoading(false);
                 if(err.message=="Request failed with status code 403"){
                     alert("Email alredy used");
                     return
@@ -46,7 +50,7 @@ export default function Signup() {
         <div className="h-screen bg-blue-100 mt-18 flex justify-center align-middle">
             <div className="h-96 scroll mt-32 p-6 shadow-sm rounded-md shadow-black">
                 <div className="text-center text-3xl font-semiboldmb mb-3">
-                    SIGN-IN
+                    SIGN-UP
                 </div>
                 <form onSubmit={handleSubmit}>
                     <TextField
@@ -65,7 +69,12 @@ export default function Signup() {
                         variant='outlined'
                         onChange={(e) => { setPassword(e.target.value) }}
                         label='Enter Password' /> <br /> <br />
-                    <Button variant='contained' type='submit'>Login</Button>
+                        {
+                            loading?
+                            <CircularProgress/>:
+                            <Button variant='contained' type='submit'>Sign up</Button>
+                        }
+                    
                 </form>
                 <div className="mt-2 text-sm text-gray-600">
                     Already have an account ? <a href='/login'>Login here</a>

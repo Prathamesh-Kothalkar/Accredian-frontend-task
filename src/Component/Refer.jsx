@@ -2,7 +2,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { TextField } from '@mui/material';
+import { CircularProgress, TextField } from '@mui/material';
 import { useContext, useState } from 'react';
 import { UserContext } from '../../context/UserContext';
 import { useNavigate } from 'react-router-dom';
@@ -30,10 +30,12 @@ export default function Refer() {
     const [email,setEmail]=useState();
     const [course,setCourse]=useState();
     const server=import.meta.env.VITE_BACKEND_SERVER;
+    const [loading,setLoading]=useState(false);
 
     const handleSubmit = async (e)=>{
         e.preventDefault();
         if(isValid(name,course,email)){
+            setLoading(true);
            try{
             const response = await axios.post(`${server}/api/v1/user/refer`,{
                 refereeName:name,
@@ -47,9 +49,11 @@ export default function Refer() {
                 }
             )
             console.log(response.data);
+            setLoading(false);
             alert("sucessfully send");
            }
            catch(err){
+            setLoading(false)
              console.error(err);
              alert("Somewent gone wrong");
            }
@@ -102,7 +106,12 @@ export default function Refer() {
                         variant='outlined'
                         onChange={(e)=>{setCourse(e.target.value)}}
                         label={"Course Name"}/> <br /><br />
-                        <Button  variant='contained'type='submit'>Refer</Button>
+                        {
+                            loading?
+                            <CircularProgress/>:
+                            <Button  variant='contained'type='submit'>Refer</Button>
+                        }
+                        
                     </form>
                 </div>
             </Box>

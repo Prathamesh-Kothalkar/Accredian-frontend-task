@@ -55,6 +55,7 @@ export default function Login(){
                 <TextField 
                 variant='outlined'
                 onChange={(e)=>{setPassword(e.target.value)}}
+                type='password'
                 label='Enter Password'/> <br /> <br />
                 {
                     loading?
